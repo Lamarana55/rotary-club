@@ -1,0 +1,48 @@
+version: '3'
+
+networks:
+    laravel:
+        driver: bridge
+
+services:
+    mysql:
+        image: mysql
+        container_name: mysql
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "4306:3306"
+        volumes:
+            - ./mysql:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: laravel_docker
+            MYSQL_USER: user
+            MYSQL_PASSWORD: user
+            MYSQL_ROOT_PASSWORD: root
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        networks:
+            - laravel
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: web
+        volumes:
+            - .:/var/www/app
+        command: php artisan serve --host=0.0.0.0 --port=9000
+        ports:
+            - "9000:9000"
+        depends_on:
+            - mysql
+        networks:
+            - laravel
+    
+    maildev:
+        image: djfarrelly/maildev
+        container_name: maildev
+        ports:
+            - "1280:80"
+            - "1225:25"
+        networks:
+            - laravel

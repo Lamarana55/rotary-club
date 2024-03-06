@@ -1,0 +1,6 @@
+afficher la Description
+message terminer (Error)
+les des media au compte de la direction recu
+
+
+Step 7, Ajouter le mot convention d’établissement sur le message. Et renommer le mail envoyé par [ Un demande de rendez-vous vous a été envoyé pour la signature de la convention d’établissement du media [type media}{nom media}.]
